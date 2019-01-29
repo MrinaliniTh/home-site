@@ -31,12 +31,18 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'pages',
+    'listings',
+    'realtors',
+    'accounts',
+    'contacts',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
 ]
 
 MIDDLEWARE = [
@@ -54,7 +60,7 @@ ROOT_URLCONF = 'btre.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR,'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -79,7 +85,6 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -118,3 +123,24 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT=os.path.join(BASE_DIR,'static')
+STATICFILES_DIRS=[
+    os.path.join(BASE_DIR,'btre/static') #whenver we run python manage.py collectstatic, it will find all the static name folder collect,and coppies to the root static which  will be ceated bt this command
+]
+# if iam using image_field in the model,then u have to give upload_to and inside path,for that u nedd to do below step and go to main url file and concatenate
+MEDIA_URL = '/media/'
+MEDIA_ROOT=os.path.join(BASE_DIR,'media')
+
+#this are alerts,u just need to write this in setting,import in views of ur wih,make seperate hmtl file alert.html,n views if you want to user just import n write messages.erro(request,'anythin'),and when rediresting to any other html file just it will show this 
+#message if u put alert.html on top of any html file that u want to show this error
+from django.contrib.messages import constants as messages
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger'
+}
+
+#to send gmail email
+#EMAIL_HOST='smtp.gmail.com'
+#EMAIL_PORT=587
+#EMAIL_HOST_USER='parikha.test@gmail.com'
+#EMAIL_HOST_PASSWORD=
+#EMAIL_USE_TLS=True
